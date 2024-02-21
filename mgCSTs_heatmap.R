@@ -7,7 +7,7 @@ mgCST.dist <- readRDS("R_script/mgCST.dist.RDS")
 relabund<-ngl.abund.clusters.cast/rowSums(ngl.abund.clusters.cast)
 
 mgCSTs.sort.df <- read_csv("Data/mgCST_sort_color.csv")
-mgCSTs.samples.df <-read_csv("Data/mgCST_samples_color.csv")
+mgCSTs.samples.df <- read_csv("Data/mgCST_samples_color.csv")
 subspecies.with.colors <- read_csv("Data/subspecies_with_colors.csv")
 subspecies.with.colors$Subspecies <- gsub("\\.", "_", subspecies.with.colors$Subspecies)
 
