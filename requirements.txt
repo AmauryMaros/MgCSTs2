@@ -6,6 +6,3 @@ seaborn
 plotly
 pickle-mixin
 scikit-learn
-time
-io
-subprocess
