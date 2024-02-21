@@ -7,3 +7,4 @@ plotly
 pickle-mixin
 scikit-learn
 openpyxl
+subprocess
