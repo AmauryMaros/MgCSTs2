@@ -1,5 +1,5 @@
 source("R_script/00_importation.R")
-
+print("R is reading")
 ngl.abund.clusters.cast <- readRDS("R_script/ngl.abund.clusters.cast.RDS")
 mgCST.hclust <- readRDS("R_script/mgCST.hclust.RDS")
 mgCST.dist <- readRDS("R_script/mgCST.dist.RDS")
@@ -16,8 +16,8 @@ parameters <- read.csv("Data/mgCSTs_parameters_streamlit.csv")
 deepsplit <- parameters$deepsplit
 mincluster <- parameters$minClusterSize
 
-deepsplit <- 4
-minclustersize <- 10
+# deepsplit <- 4
+# minclustersize <- 10
 
 # Use subset to filter the data
 mgCSTs.samples <- subset(mgCSTs.samples.df, deepSplit == deepsplit & minClusterSize == mincluster)
