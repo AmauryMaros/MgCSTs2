@@ -145,7 +145,7 @@ if heatmap :
     # st.subheader("MgCSTs Heatmap")
 
     # process = subprocess.Popen(["Rscript", "mgCSTs_heatmap.R"])
-    process = subprocess.run([f"{sys.executable}", "mgCSTs_heatmap.R"])
+    process = subprocess.Popen([f"{sys.executable}", "mgCSTs_heatmap.R"])
 
     print(process)
     result = process.communicate()
