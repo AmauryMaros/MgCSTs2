@@ -1,0 +1,12 @@
+streamlit
+pandas
+numpy
+matplotlib
+PIL
+seaborn
+plotly
+pickle
+sklearn
+time
+io
+subprocess
