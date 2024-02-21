@@ -138,8 +138,6 @@ with st.expander("Show table"):
 
 st.subheader("MgCSTs heatmap")
 
-import sys
-
 heatmap = st.button(label = "Generate heatmap (1min30)")
 if heatmap :
     # st.subheader("MgCSTs Heatmap")
