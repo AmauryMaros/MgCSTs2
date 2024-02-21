@@ -4,8 +4,8 @@ numpy
 matplotlib
 seaborn
 plotly
-pickle
-sklearn
+pickle-mixin
+scikit-learn
 time
 io
 subprocess
