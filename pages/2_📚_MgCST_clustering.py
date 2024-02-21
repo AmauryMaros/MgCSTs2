@@ -138,11 +138,15 @@ with st.expander("Show table"):
 
 st.subheader("MgCSTs heatmap")
 
+import sys
+
 heatmap = st.button(label = "Generate heatmap (1min30)")
 if heatmap :
-    st.subheader("MgCSTs Heatmap")
+    # st.subheader("MgCSTs Heatmap")
 
-    process = subprocess.Popen(["Rscript", "mgCSTs_heatmap.R"])
+    # process = subprocess.Popen(["Rscript", "mgCSTs_heatmap.R"])
+    process = subprocess.run(["Rscript", "mgCSTs_heatmap.R"])
+
     print(process)
     result = process.communicate()
 
