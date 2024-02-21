@@ -24,12 +24,14 @@ with tab1:
         
         col1, col2 = st.columns(2)
         with col1 :
-            fig1 = Image.open("Medias/mgss_coverage_png/" + option + "_subspecies_coverage_boxplot.png") 
-            st.image(fig1)
+        #     fig1 = Image.open("Medias/mgss_coverage_png/" + option + "_subspecies_coverage_boxplot.png") 
+        #     st.image(fig1)
+                st.image("Medias/mgss_coverage_png/" + option + "_subspecies_coverage_boxplot.png")
 
         with col2 :
-            fig2 = Image.open("Medias/mgss_coverage_png/" + option + "_subspecies_coverage_by_NoGenes.png")
-            st.image(fig2)
+        #     fig2 = Image.open("Medias/mgss_coverage_png/" + option + "_subspecies_coverage_by_NoGenes.png")
+        #     st.image(fig2)
+                st.image("Medias/mgss_coverage_png/" + option + "_subspecies_coverage_by_NoGenes.png")
 
 with tab2 :
 
@@ -41,8 +43,9 @@ with tab2 :
         st.dataframe(mgss_coverage[mgss_coverage['sub_species'].apply(lambda x : x.split(".")[0]) == option])
 
 with tab3 :
-        image = Image.open("Medias/heatmap_presence_absence/_" + option + "_heatmap_presence_absence.png")
-        st.image(image)
+        # image = Image.open("Medias/heatmap_presence_absence/_" + option + "_heatmap_presence_absence.png")
+        # st.image(image)
+        st.image("Medias/heatmap_presence_absence/_" + option + "_heatmap_presence_absence.png")
 
 
 # st.subheader("Samples composition")
