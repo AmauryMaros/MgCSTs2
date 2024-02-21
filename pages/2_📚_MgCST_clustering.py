@@ -145,7 +145,7 @@ if heatmap :
     # st.subheader("MgCSTs Heatmap")
 
     # process = subprocess.Popen(["Rscript", "mgCSTs_heatmap.R"])
-    process = subprocess.Popen([f"{sys.executable}", "mgCSTs_heatmap.R"])
+    process = subprocess.Popen([f"{sys.executable}", "/mount/src/mgcsts2/mgCSTs_heatmap.R"])
     result = process.communicate()
 
     def displayPDF(file):
