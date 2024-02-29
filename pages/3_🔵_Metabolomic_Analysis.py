@@ -41,7 +41,8 @@ def read_pickle(path):
     with open(path, 'rb') as file:
         df = pickle.load(file)
     return df
-metabolomics = read_pickle("/Users/amaros/Documents/log_norm.pkl")      # change this path
+# metabolomics = read_pickle("/Users/amaros/Documents/log_norm.pkl")      # change this path
+metabolomics = read_pickle("Data/log_norm.pkl")      # change this path
 pca_model =  read_pickle("Data/pca_model.pkl")
 
 @st.cache_data
