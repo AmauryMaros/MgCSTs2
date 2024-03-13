@@ -1,0 +1,10 @@
+streamlit
+pandas
+numpy
+matplotlib
+subprocess
+seaborn
+base64
+plotly
+pickle
+scikit-learn
