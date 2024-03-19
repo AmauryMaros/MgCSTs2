@@ -42,8 +42,18 @@ def read_pickle(path):
         df = pickle.load(file)
     return df
 metabolomics = read_pickle("/Users/amaros/Documents/log_norm.pkl")      # comment this line
-#metabolomics = read_pickle("Data/log_norm.pkl")      # uncomment this line
-pca_model =  read_pickle("Data/pca_model.pkl")
+# metabolomics = read_pickle("Data/log_norm.pkl")      # uncomment this line
+# pca_model =  read_pickle("Data/pca_model.pkl")
+
+pca_model =  read_pickle("Data/pca_model_no_phosphate_stearate.pkl")
+# Remove phsophate and stearate data from metabolomic columns
+cols_to_drop = []
+for i in metabolomics.columns[1:]:
+    if ":phosphate" in i :
+        cols_to_drop.append(i)
+    elif ":stearate" in i :
+        cols_to_drop.append(i)
+metabolomics = metabolomics.drop(cols_to_drop, axis=1)
 
 @st.cache_data
 def pca_model_data(minclustersize, deepsplit):
@@ -55,7 +65,7 @@ mgCST = pca_model_data(minclustersize, deepsplit)['mgCST']
 
 # @st.cache_data
 # def filter_df(df, minclustersize, deepsplit):
-#      return df[(df['minClusterSize'] == minclustersize) & (df['deepSplit'] == deepsplit)]
+#      return df[(df['m inClusterSize'] == minclustersize) & (df['deepSplit'] == deepsplit)]
 # mgcsts_samples = filter_df(mgcsts_samples_df, minclustersize, deepsplit)
 # mgcsts = mgCSTs_sort[(mgCSTs_sort['deepSplit'] == deepsplit) & (mgCSTs_sort['minClusterSize'] == minclustersize)]
 
@@ -80,7 +90,7 @@ pca_df = pd.merge(pca_df, project, on='sampleID', how='inner')
 pca_df = pd.merge(pca_df, color_mgCST, on='mgCST', how='inner')      
 pca_df = pca_df.sort_values(by='mgCST', ascending=True)
 pca_df = pca_df.sort_values('mgCST', ascending=True).reset_index(drop=True)
-pca_df['mgCST'] = pca_df['mgCST'].astype(str)   # to be interpret as categorical column for plotly
+pca_df['mgCST'] = pca_df['mgCST'].astype(str)   # to be interpreted as categorical column for plotly
 
 
 st.header("PCA - all samples", divider='gray')
@@ -182,8 +192,8 @@ def data_pca(m1,m2):
     df2 = mgcsts_samples[mgcsts_samples['mgCST'].isin(range(m2[0],m2[1]+1))]
     df2.loc[:,'label'] = "GroupB"
     df = pd.concat([df1,df2], axis = 0)
-    data1 = pd.merge(df, metabolomics, on = "sampleID", how = "inner")
-    return data1
+    data_1 = pd.merge(df, metabolomics, on = "sampleID", how = "inner")
+    return data_1
 
 data1 = data_pca(mgCST1, mgCST2)
 

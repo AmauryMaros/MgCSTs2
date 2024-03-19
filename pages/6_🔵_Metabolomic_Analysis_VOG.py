@@ -43,7 +43,17 @@ def read_pickle(path):
     return df
 metabolomics = read_pickle("/Users/amaros/Documents/log_norm.pkl")      # comment this line
 #metabolomics = read_pickle("Data/log_norm.pkl")      # uncomment this line
-pca_model =  read_pickle("Data/vog_pca_model.pkl")
+# pca_model =  read_pickle("Data/vog_pca_model.pkl")
+
+pca_model =  read_pickle("Data/vog_pca_model_no_phosphate_stearate.pkl")
+# Remove phsophate and stearate data from metabolomic columns
+cols_to_drop = []
+for i in metabolomics.columns[1:]:
+    if ":phosphate" in i :
+        cols_to_drop.append(i)
+    elif ":stearate" in i :
+        cols_to_drop.append(i)
+metabolomics = metabolomics.drop(cols_to_drop, axis=1)
 
 @st.cache_data
 def pca_model_data(minclustersize, deepsplit):
