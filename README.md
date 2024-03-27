@@ -20,6 +20,8 @@
 2. Put the file in Data/ directory
 
 3. In   pages/5_🔵_Metabolomic_Analysis_Gene_based.py
+
+
               6_🔵_Metabolomic_Analysis_VOG.py
 
     - comment line 44
