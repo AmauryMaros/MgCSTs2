@@ -19,7 +19,8 @@ species = [s for s in vog_species if s not in not_to_cluster]
 with open('Data/vog_clusters.pkl', 'rb') as f:
     vog_clusters = pickle.load(f)
 
-with open('Data/vog_mgss_pa.pkl', 'rb') as f:
+with open('/Users/amaros/Documents/vog_mgss_pa.pkl', 'rb') as f:
+# with open('Data/vog_mgss_pa.pkl', 'rb') as f:
     vog_mgss_pa = pickle.load(f)
 
 with open('Data/samples_clusters_vog.pkl', 'rb') as f:
