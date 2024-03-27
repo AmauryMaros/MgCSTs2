@@ -19,10 +19,7 @@
 
 2. Put the file in Data/ directory
 
-3. In   pages/5_🔵_Metabolomic_Analysis_Gene_based.py
-
-
-              6_🔵_Metabolomic_Analysis_VOG.py
+3. In pages 5 and 6 (Metabolomic Analysis) :
 
     - comment line 44
     - uncomment line 45
