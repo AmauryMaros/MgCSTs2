@@ -3,14 +3,11 @@
 1. Download this file
     - https://www.dropbox.com/scl/fi/uho7t24rsvz7g9t0cj1tx/vog_mgss_pa.pkl?rlkey=u5ad0rmy551zlcgnjsb5x6fnj&dl=0
 
-2. Put the file in the Data/ directory
+    - https://www.dropbox.com/scl/fi/2qkgi33u8wdg6hj3cg30i/reorder_dataframe.pkl?rlkey=btuix0oc3srdjwd9ojni1v4mb&dl=0
 
-3. In pages/2_📊_MgSs_Analysis_VOG_based.py :
+    - https://www.dropbox.com/scl/fi/9cg29rpz6aww4ss4sqbjt/hover_dict.pkl?rlkey=l3r23hflpa7hb7yshh5pacouy&dl=0
 
-    - comment line 22 
-    - uncomment line 23
-
-
+2. Put the files in the Data/ directory
 
 # For metabolomic analysis : download this file
 

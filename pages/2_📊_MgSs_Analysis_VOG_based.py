@@ -1,8 +1,9 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import rpy2.robjects as robjects
 import pickle
+import plotly.graph_objects as go
+from plotly.offline import plot
 
 st.set_page_config(layout="centered")
 
@@ -16,15 +17,20 @@ VOG_GeneProduct = pd.read_csv("Data/VOG_gene_product.csv")
 not_to_cluster = ["Alterileibacterium", "Anaerococcus", "Bacteroides", "Campylobacter", "Corynebacterium", "Gardnerella", "Gulosibacter", "Lactobacillus", "Limosilactobacillus", "MultiGenera", "Porphyromonas", "Prevotella", "Streptococcus"]
 species = [s for s in vog_species if s not in not_to_cluster]
 
-with open('Data/vog_clusters.pkl', 'rb') as f:
-    vog_clusters = pickle.load(f)
+# with open('/Users/amaros/Documents/reorder_dataframe.pkl', 'rb') as f:
+with open('Data/reorder_dataframe.pkl', 'rb') as f:
+    reorder_dataframe = pickle.load(f)
 
-with open('/Users/amaros/Documents/vog_mgss_pa.pkl', 'rb') as f:
-# with open('Data/vog_mgss_pa.pkl', 'rb') as f:
+# with open("/Users/amaros/Documents/hover_dict.pkl", 'rb') as file:
+with open('Data/hover.pkl', 'rb') as f:
+        hover = pickle.load(f)
+
+# with open('/Users/amaros/Documents/vog_mgss_pa.pkl', 'rb') as f:
+with open('Data/vog_mgss_pa.pkl', 'rb') as f:
     vog_mgss_pa = pickle.load(f)
 
-with open('Data/samples_clusters_vog.pkl', 'rb') as f:
-    samples_clusters_vog = pickle.load(f)
+with open('Data/vog_clusters.pkl', 'rb') as f:
+    vog_clusters = pickle.load(f)
 
 st.title("Metagenomic Subspecies")
 
@@ -58,39 +64,64 @@ with tab2 :
 with tab3 :
         st.image("Medias/vog_heatmap_presence_absence/_" + option + "_heatmap_presence_absence.png")
 
-        # Multiselection to choose one or multiple clusters of VOGs
-        vog_cluster_to_choose = st.multiselect("Select VOG cluster", [k for k in np.arange(1,11,1)])
-        vog_cluster = [int(elt) for elt in vog_cluster_to_choose]
+        selection = st.radio("Select a filter", ["VOG cluster", "VOG ID"], index=None)
+
+        if selection == "VOG cluster" :
+
+                # Multiselection to choose one or multiple clusters of VOGs / ID
+                vog_cluster_to_choose = st.multiselect("Select VOG cluster", [k for k in np.arange(1,11,1)])
+                vog_cluster = [int(elt) for elt in vog_cluster_to_choose]
+
+                vog_clusters_df = vog_clusters[option]
+                vog_clusters_df['vog_cluster'] = vog_clusters_df['vog_cluster'].astype(int)
+                vog_to_consider = vog_clusters_df[vog_clusters_df['vog_cluster'].isin(vog_cluster)]['vog']
+                st.dataframe(VOG_GeneProduct.loc[VOG_GeneProduct['VOG'].isin(vog_to_consider.values), :].reset_index(drop=True),use_container_width=True)
+
         
-        vog_clusters_df = vog_clusters[option]
-        vog_clusters_df['vog_cluster'] = vog_clusters_df['vog_cluster'].astype(int)
-        vog_to_consider = vog_clusters_df[vog_clusters_df['vog_cluster'].isin(vog_cluster)]['vog']
+        if selection == "VOG ID":
+                vog_id_to_choose = st.text_input("Select a VOG ID:")
+                st.dataframe(VOG_GeneProduct[VOG_GeneProduct['VOG'] == vog_id_to_choose],use_container_width=True)
 
-        # # Multiselection to choose one or multiple clusters of samples
-        # samples_cluster_to_choose = st.multiselect("Select samples cluster", [k for k in np.arange(1,11,1)])
-        # samples_cluster = [int(elt) for elt in samples_cluster_to_choose]
+        
+        ### Interative Heatmap
 
-        # samples_ids = samples_clusters_vog[option]
-        # samples_ids['sample_cluster'] = samples_ids['sample_cluster'].astype(int)
-        # samples_ids = samples_ids[samples_ids['sample_cluster'].isin(samples_cluster)]
-        # samples_to_consider = samples_ids['sampleID']
+        interactive_heatmap = st.button("Interactive heatmap")
 
-        # # Presence absence selection
-        # presence_absence = st.multiselect("Choose presence or absence:", [0,1])
-        # # Filter the VOG presence absence table
-        # vog_mgss_pa = vog_mgss_pa[option]
-        # columns_to_keep = ['VOG'] + samples_to_consider.to_list()
-        # vog_mgss_pa_filter = vog_mgss_pa[vog_mgss_pa['VOG'].isin(vog_to_consider)][columns_to_keep]
-        # vog_mgss_pa_filter
-        # # vog_to_consider = vog_mgss_pa_filter['VOG']
+        if interactive_heatmap :
 
-        # Get the dataframe from dictionary pickle for the considered mgss
-        vog_clusters_df = vog_clusters[option]
-        vog_clusters_df['vog_cluster'] = vog_clusters_df['vog_cluster'].astype(int)
-        # Get the VOG Ids based on VOG_cluster selection in Streamlit
-        vog_to_consider = vog_clusters_df[vog_clusters_df['vog_cluster'].isin(vog_cluster)]['vog']
-        # st.dataframe(vog_to_consider)
-        st.dataframe(VOG_GeneProduct.loc[VOG_GeneProduct['VOG'].isin(vog_to_consider.values), :].reset_index(drop=True))
+                df_reorder = reorder_dataframe[option]
+                
+                # Create heatmap
+                heatmap = go.Figure(data=go.Heatmap(
+                z=df_reorder,
+                x=df_reorder.columns,
+                y=df_reorder.index,
+                colorscale=[[0, 'antiquewhite'], [1, 'mediumblue']],
+                showscale=False,  # Customize colors for presence (green) and absence (white)
+                hovertext = hover[option]
+                # hovertemplate="VOG: %{y}<br>SampleID: %{x}<br>GeneProduct: %{hover[option]}"
+
+                ))
+
+                # Update layout
+                heatmap.update_layout(
+                title='Presence-Absence Heatmap (Clustered)',
+                xaxis=dict(title='Samples'),
+                yaxis=dict(title='VOG'),  
+                )
+                # Update x axis
+                heatmap.update_xaxes(
+                showticklabels=False
+                )
+
+                # Update y axis
+                heatmap.update_yaxes(
+                showticklabels=False
+                )
+
+                # Show plot
+                # heatmap.show()
+                plot(heatmap, filename='plot.html', auto_open=True)
 
 # # st.subheader("Samples composition")
 # # st.caption("Percentage of samples containing more than a specific percentage (50-60-70-80-90) of protein count")
