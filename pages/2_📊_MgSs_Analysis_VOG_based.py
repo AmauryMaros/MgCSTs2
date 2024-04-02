@@ -17,16 +17,16 @@ VOG_GeneProduct = pd.read_csv("Data/VOG_gene_product.csv")
 not_to_cluster = ["Alterileibacterium", "Anaerococcus", "Bacteroides", "Campylobacter", "Corynebacterium", "Gardnerella", "Gulosibacter", "Lactobacillus", "Limosilactobacillus", "MultiGenera", "Porphyromonas", "Prevotella", "Streptococcus"]
 species = [s for s in vog_species if s not in not_to_cluster]
 
-# with open('/Users/amaros/Documents/reorder_dataframe.pkl', 'rb') as f:
-with open('Data/reorder_dataframe.pkl', 'rb') as f:
+with open('/Users/amaros/Documents/reorder_dataframe.pkl', 'rb') as f:
+# with open('Data/reorder_dataframe.pkl', 'rb') as f:
     reorder_dataframe = pickle.load(f)
 
-# with open("/Users/amaros/Documents/hover_dict.pkl", 'rb') as file:
-with open('Data/hover.pkl', 'rb') as f:
+with open("/Users/amaros/Documents/hover_dict.pkl", 'rb') as f:
+# with open('Data/hover.pkl', 'rb') as f:
         hover = pickle.load(f)
 
-# with open('/Users/amaros/Documents/vog_mgss_pa.pkl', 'rb') as f:
-with open('Data/vog_mgss_pa.pkl', 'rb') as f:
+with open('/Users/amaros/Documents/vog_mgss_pa.pkl', 'rb') as f:
+# with open('Data/vog_mgss_pa.pkl', 'rb') as f:
     vog_mgss_pa = pickle.load(f)
 
 with open('Data/vog_clusters.pkl', 'rb') as f:
@@ -97,16 +97,16 @@ with tab3 :
                 x=df_reorder.columns,
                 y=df_reorder.index,
                 colorscale=[[0, 'antiquewhite'], [1, 'mediumblue']],
-                showscale=False,  # Customize colors for presence (green) and absence (white)
-                hovertext = hover[option]
-                # hovertemplate="VOG: %{y}<br>SampleID: %{x}<br>GeneProduct: %{hover[option]}"
+                showscale=False, 
+                hovertext = hover[option],
+                hovertemplate="VOG: %{y}<br>SampleID: %{x}<br>GeneProduct: %{hovertext}"
 
                 ))
 
                 # Update layout
                 heatmap.update_layout(
-                title='Presence-Absence Heatmap (Clustered)',
-                xaxis=dict(title='Samples'),
+                title= f'{option} Presence-Absence Heatmap',
+                xaxis= dict(title='Samples'),
                 yaxis=dict(title='VOG'),  
                 )
                 # Update x axis
