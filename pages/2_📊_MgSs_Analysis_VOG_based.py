@@ -12,7 +12,9 @@ vog_clust = pd.read_csv("Data/mgss.clustering.parameters.vog.csv").rename(column
 vog_mgss_coverage = pd.read_csv("Data/vog.mgSs.coverage.stats.csv").rename(columns={"Unnamed: 0" : "sub_species", "as.factor(sample_cluster)" : "sample_cluster"})
 vog_species = vog_mgss_coverage['sub_species'].apply(lambda x : x.split(".")[0]).unique()
 
-VOG_GeneProduct = pd.read_csv("Data/VOG_gene_product.csv")
+# VOG_GeneProduct = pd.read_csv("Data/VOG_gene_product.csv")
+VOG_GeneProduct = pd.read_csv("/Users/amaros/Documents/VOG_gene_product.csv")
+
 
 not_to_cluster = ["Alterileibacterium", "Anaerococcus", "Bacteroides", "Campylobacter", "Corynebacterium", "Gardnerella", "Gulosibacter", "Lactobacillus", "Limosilactobacillus", "MultiGenera", "Porphyromonas", "Prevotella", "Streptococcus"]
 species = [s for s in vog_species if s not in not_to_cluster]
