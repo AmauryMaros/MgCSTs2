@@ -1,12 +1,7 @@
 import streamlit as st
 import pickle
-import matplotlib.pyplot as plt
-import seaborn as sns
 import pandas as pd
-import matplotlib.colors as mcolors
-import matplotlib.lines as mlines
 from sklearn.decomposition import PCA
-import numpy as np
 import plotly.express as px
 
 st.set_page_config(layout="wide")

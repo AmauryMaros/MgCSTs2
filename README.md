@@ -1,9 +1,14 @@
-# For Mgss Analysis :
+Git clone this repo
+
+Change the name of the conda env in environment.yml file
 
 conda env create -f environment.yml
 
+# For Mgss Analysis :
+
 
 1. Download this file
+
     - https://www.dropbox.com/scl/fi/uho7t24rsvz7g9t0cj1tx/vog_mgss_pa.pkl?rlkey=u5ad0rmy551zlcgnjsb5x6fnj&dl=0
 
     - https://www.dropbox.com/scl/fi/2qkgi33u8wdg6hj3cg30i/reorder_dataframe.pkl?rlkey=btuix0oc3srdjwd9ojni1v4mb&dl=0
