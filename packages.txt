@@ -1,7 +1,0 @@
-r-base
-r-base-dev
-r-cran-gplots
-r-cran-gplot2
-r-cran-reshape2
-r-cran-RColorBrewer
-r-cran-readxl

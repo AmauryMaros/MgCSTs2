@@ -1,5 +1,8 @@
 # For Mgss Analysis :
 
+conda env create -f environment.yml
+
+
 1. Download this file
     - https://www.dropbox.com/scl/fi/uho7t24rsvz7g9t0cj1tx/vog_mgss_pa.pkl?rlkey=u5ad0rmy551zlcgnjsb5x6fnj&dl=0
 

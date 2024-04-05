@@ -1,0 +1,15 @@
+name: mgcsts_env
+channels:
+  - defaults
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.9
+  - streamlit
+  - pandas
+  - scikit-learn
+  - matplotlib
+  - numpy
+  - seaborn
+  - plotly
+  - r-base
