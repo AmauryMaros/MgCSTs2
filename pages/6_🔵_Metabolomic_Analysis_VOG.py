@@ -40,9 +40,9 @@ def read_pickle(path):
         df = pickle.load(file)
     return df
 # metabolomics = read_pickle("/Users/amaros/Documents/log_norm.pkl")
-# pca_model =  read_pickle("Data/vog_pca_model_no_phosphate_stearate.pkl")
-metabolomics = read_pickle("Data/log_norm.pkl")      # uncomment this line
-pca_model =  read_pickle("Data/vog_pca_model.pkl")
+pca_model =  read_pickle("Data/vog_pca_model_no_phosphate_stearate.pkl")
+metabolomics = read_pickle("Data/log_norm.pkl")
+# pca_model =  read_pickle("Data/vog_pca_model.pkl")
 
 @st.cache_data
 def pca_model_data(minclustersize, deepsplit):
