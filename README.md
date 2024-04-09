@@ -27,7 +27,3 @@ conda env create -f environment.yml
 
 2. Put the file in Data/ directory
 
-3. In pages 5 and 6 (Metabolomic Analysis) :
-
-    - comment line 44
-    - uncomment line 45
