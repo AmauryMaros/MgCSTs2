@@ -19,6 +19,7 @@ conda env create -f environment.yml
 
 2. Put the files in the Data/ directory
 
+
 # For metabolomic analysis : download this file
 
 1. Download this file
