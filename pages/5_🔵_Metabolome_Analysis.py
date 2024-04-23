@@ -8,6 +8,8 @@ import plotly.graph_objects as go
 from sklearn.decomposition import PCA
 import plotly.express as px
 
+st.set_page_config(layout="centered")
+
 ######################################## ----- DATA IMPORTATION ----- ########################################
 
 lsvf_raw = pd.read_csv("Data/LSVF_Metabolome_Raw.csv")
