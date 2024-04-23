@@ -87,10 +87,25 @@ st.subheader("Metabolome Analysis", divider = 'grey')
 
 tab1, tab2 = st.tabs(['Non normalized data','Variance normalized data'])
 with tab1 :
+    fig = go.Figure()
     fig = px.scatter(pca_data, x='PC1', y='PC2', color='project',title="Project dependency - PCA representation")
+    fig.update_layout(
+    xaxis=dict(
+        showgrid=True,  # Show grid lines
+        gridcolor='rgba(0,0,0,0.1)',  # Grid line color
+        gridwidth=1,  # Grid line width
+    )
+)
     st.plotly_chart(fig)
 with tab2 :
     fig = px.scatter(pca_data_var, x='PC1', y='PC2', color='project',title="Project dependency - PCA representation")
+    fig.update_layout(
+    xaxis=dict(
+        showgrid=True,  # Show grid lines
+        gridcolor='rgba(0,0,0,0.1)',  # Grid line color
+        gridwidth=1,  # Grid line width
+    )
+)
     st.plotly_chart(fig)
 
 st.subheader("MgCSTs metabolome analysis", divider='grey')
@@ -103,12 +118,14 @@ with col1:
     mgcsts_selection = st.multiselect(options=range(1,27), label="Select at least 2 MgCSTs:")
     bullet_points = """
     * Double click on a label on the legend to isolate the corresponding plots
-    * fold_change_A_vs_B : reference is A. Log2(FC) is calculated by dividing A data by B data
+    * fold_change_A_vs_B : reference is A.
+    * Log2(FC) is calculated by dividing A data by B data
     * Adjusted p-value has been estimated using Benjamini/Hochberg criterion
     """
     st.markdown(bullet_points)
 
 with col2:
+    st.write("MgCSTs dominant taxa:")
     mgCSTs_sort = mgCSTs_sort_vog.copy()
     mgCSTs_sort = mgCSTs_sort[(mgCSTs_sort['deepSplit'] == 4) & (mgCSTs_sort['minClusterSize'] == 10)].reset_index(drop=True).set_index('mgCST')
     st.dataframe(mgCSTs_sort['domTaxa'])
@@ -197,11 +214,24 @@ if mgcsts_selection != []:
             fig.add_shape(type='line', x0=min(results[key]), x1=max(results[key]), y0=-np.log10(0.05), y1=-np.log10(0.05), line=dict(color='red', width=2, dash='dash'))
 
 
-    fig.update_layout(xaxis_title="log2(FC)",
-                        yaxis_title="-log10(adjusted_p_value)",
-                        width=1200,
-                        height=600)
-
+    fig.update_layout(
+         xaxis=dict(
+              showgrid=True,  # Show grid lines
+              gridcolor='rgba(0,0,0,0.1)',  # Grid line color
+              gridwidth=1,  # Grid line width
+              ),
+        legend=dict(
+             orientation="h",  # Horizontal orientation
+             yanchor="bottom",  # Anchor the legend to the bottom of the plot
+             y=-0.4,  # Positioning of the legend below the plot
+             xanchor="right",  # Anchor the legend to the right
+             x=1  # Positioning of the legend to the right
+             ),
+             yaxis_title="-log10(adjusted_p_value)",
+             xaxis_title="log2(FC)",
+             width=1200,
+             height=600)
+    
     st.plotly_chart(fig, use_container_width=True)
 
 
