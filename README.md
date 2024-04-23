@@ -4,7 +4,7 @@ Change the name of the conda env in environment.yml file
 
 conda env create -f environment.yml
 
-# For Mgss Analysis :
+<!-- # For Mgss Analysis : -->
 
 
 1. Download this file
@@ -20,10 +20,10 @@ conda env create -f environment.yml
 2. Put the files in the Data/ directory
 
 
-# For metabolomic analysis : download this file
+<!-- # For metabolomic analysis : download this file
 
 1. Download this file
     - https://www.dropbox.com/scl/fi/hoxcb67zuur6b75z7banw/log_norm.pkl?rlkey=p68nhasjr1ccx7rt543vae6st&dl=0
 
-2. Put the file in Data/ directory
+2. Put the file in Data/ directory -->
 
