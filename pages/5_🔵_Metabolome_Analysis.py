@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 from sklearn.decomposition import PCA
 import plotly.express as px
 
-st.set_page_config(layout="centered")
+st.set_page_config(layout="wide")
 
 ######################################## ----- DATA IMPORTATION ----- ########################################
 
@@ -16,6 +16,7 @@ lsvf_raw = pd.read_csv("Data/LSVF_Metabolome_Raw.csv")
 pressmat_raw = pd.read_csv("Data/PreSSMat_metabolomics_rawpeaks_100221.csv").rename(columns = {"UID":"sampleID"})
 zapps_raw = pd.read_csv("Data/ZAPPS_metabolomics_rawpeaks_100221.csv").rename(columns = {"UID":"sampleID"})
 mgCSTs_sort_vog = pd.read_csv("Data/vog_mgCST_sort_color.csv")
+mgCSTs_sort_vog = mgCSTs_sort_vog[(mgCSTs_sort_vog['deepSplit'] == 4) & (mgCSTs_sort_vog['minClusterSize']==10)]
 mgCSTs_samples_vog = pd.read_csv("Data/vog.mgCSTs.samples.df.csv")
 mgCSTs_samples_vog = mgCSTs_samples_vog[(mgCSTs_samples_vog['deepSplit'] == 4) & (mgCSTs_samples_vog['minClusterSize']==10)]
 zp_knn = pd.read_csv('Data/zapps_pressmat_clean.csv')
@@ -61,12 +62,11 @@ raw_merged = raw_merged.drop(cols_to_remove, axis=1)
 
 pca_data = raw_merged.drop(['sampleID','mgCST','project'],axis=1)
 pca_data = pca_data.fillna(0.5*pca_data.min())
-pca = PCA(n_components=2)
+pca = PCA(n_components=3)
 pca_data = pca.fit_transform(pca_data)
-pca_data = pd.DataFrame(pca_data, columns=['PC1','PC2'])
+pca_data = pd.DataFrame(pca_data, columns=['PC1','PC2','PC3'])
 pca_data['mgCST'] = raw_merged['mgCST']
 pca_data['project'] = raw_merged['project']
-
 
 df_var_norm = raw_merged.drop(['sampleID','mgCST','project'],axis=1)
 df_var_norm = df_var_norm.fillna(0.5*df_var_norm.min())
@@ -75,11 +75,24 @@ df_var_norm = df_var_norm.fillna(0.5*df_var_norm.min())
 variances = df_var_norm.var()
 # Normalize each feature by its variance
 df_norm = df_var_norm.divide(variances.pow(0.5), axis=1)
-pca_var = PCA(n_components=2)
+pca_var = PCA(n_components=3)
 pca_data_var = pca_var.fit_transform(df_norm)
-pca_data_var = pd.DataFrame(pca_data_var, columns=['PC1','PC2'])
+pca_data_var = pd.DataFrame(pca_data_var, columns=['PC1','PC2','PC3'])
 pca_data_var['mgCST'] = raw_merged['mgCST']
 pca_data_var['project'] = raw_merged['project']
+
+# Assign mgCST color for each sample
+color_mgCST = mgCSTs_sort_vog[['mgCST', 'color_mgCST']].reset_index(drop = True)
+color_mgCST['mgCST'] = color_mgCST['mgCST'].astype(str)
+color_mgCST = dict(color_mgCST.values)
+
+# Make MgCST columns as categorical column
+pca_data['mgCST'] = pca_data['mgCST'].astype(str)
+pca_data_var['mgCST'] = raw_merged['mgCST'].astype(str)
+
+# Remove outlier on pca_data_var
+pca_data_var = pca_data_var[pca_data_var['PC1'] <= 100]
+
 
 ######################################## ----- PAGE CONTENT ----- ########################################
 
@@ -87,23 +100,117 @@ st.subheader("Metabolome Analysis", divider = 'grey')
 
 tab1, tab2 = st.tabs(['Non normalized data','Variance normalized data'])
 with tab1 :
-    fig = go.Figure()
-    fig = px.scatter(pca_data, x='PC1', y='PC2', color='project',title="Project dependency - PCA representation")
+    col1, col2 = st.columns(2)
+    with col1:
+
+        fig = go.Figure()
+        fig = px.scatter(pca_data, x='PC1', y='PC2', color='project',title="Project dependency - PCA representation")
+        fig.update_layout(
+        xaxis=dict(
+            showgrid=True,  # Show grid lines
+            gridcolor='rgba(0,0,0,0.1)',  # Grid line color
+            gridwidth=1,  # Grid line width
+        ))
+        st.plotly_chart(fig)
+
+        fig = go.Figure()
+        fig = px.scatter(pca_data, x='PC2', y='PC3', color='project',title="Project dependency - PCA representation")
+        fig.update_layout(
+        xaxis=dict(
+            showgrid=True,  # Show grid lines
+            gridcolor='rgba(0,0,0,0.1)',  # Grid line color
+            gridwidth=1,  # Grid line width
+        ))
+        st.plotly_chart(fig)
+
+    with col2:
+
+        fig = go.Figure()
+        fig = px.scatter(pca_data, x='PC1', y='PC2', color='mgCST', color_discrete_map=color_mgCST, title="MgCSTs dependency - PCA representation")
+        fig.update_layout(
+        xaxis=dict(
+            showgrid=True,  # Show grid lines
+            gridcolor='rgba(0,0,0,0.1)',  # Grid line color
+            gridwidth=1,  # Grid line width
+        ))
+        st.plotly_chart(fig)
+        fig = go.Figure()
+        fig = px.scatter(pca_data, x='PC2', y='PC3', color='mgCST', color_discrete_map=color_mgCST, title="MgCSTs dependency - PCA representation")
+        fig.update_layout(
+        xaxis=dict(
+            showgrid=True,  # Show grid lines
+            gridcolor='rgba(0,0,0,0.1)',  # Grid line color
+            gridwidth=1,  # Grid line width
+        ))
+        st.plotly_chart(fig)
+
+with tab2 :
+    col1, col2 = st.columns(2)
+    with col1:
+        fig = px.scatter(pca_data_var, x='PC1', y='PC2', color='project',title="Project dependency - PCA representation")
+        fig.update_layout(
+        xaxis=dict(
+            showgrid=True,  # Show grid lines
+            gridcolor='rgba(0,0,0,0.1)',  # Grid line color
+            gridwidth=1,  # Grid line width
+        ))
+        st.plotly_chart(fig)
+
+        fig = px.scatter(pca_data_var, x='PC2', y='PC3', color='project',title="Project dependency - PCA representation")
+        fig.update_layout(
+        xaxis=dict(
+            showgrid=True,  # Show grid lines
+            gridcolor='rgba(0,0,0,0.1)',  # Grid line color
+            gridwidth=1,  # Grid line width
+        ))
+        st.plotly_chart(fig)
+    
+
+    with col2:
+
+        fig = go.Figure()
+        fig = px.scatter(pca_data_var, x='PC1', y='PC2', color='mgCST', color_discrete_map=color_mgCST, title="MgCSTs dependency - PCA representation")
+        fig.update_layout(
+        xaxis=dict(
+            showgrid=True,  # Show grid lines
+            gridcolor='rgba(0,0,0,0.1)',  # Grid line color
+            gridwidth=1))  # Grid line width
+        st.plotly_chart(fig)
+        fig = go.Figure()
+        fig = px.scatter(pca_data_var, x='PC2', y='PC3', color='mgCST', color_discrete_map=color_mgCST, title="MgCSTs dependency - PCA representation")
+        fig.update_layout(
+        xaxis=dict(
+            showgrid=True,  # Show grid lines
+            gridcolor='rgba(0,0,0,0.1)',  # Grid line color
+            gridwidth=1))  # Grid line width
+        st.plotly_chart(fig)
+
+st.subheader("MgCSTs distribution", divider='grey')
+
+col1, col2 = st.columns(2)
+with col1:
+    value_counts = zp_knn['mgCST'].value_counts()
+    fig = px.bar(x=value_counts.index, y=value_counts.values, title='MgCSTs distribution in Zapps PressMat')
     fig.update_layout(
+    xaxis_title='MgCSTs',
+    yaxis_title='Number of samples',
     xaxis=dict(
-        showgrid=True,  # Show grid lines
-        gridcolor='rgba(0,0,0,0.1)',  # Grid line color
-        gridwidth=1,  # Grid line width
+        tickmode='array',
+        tickvals=value_counts.index,  # Set the tick values to the unique values in your DataFrame
+        ticktext=value_counts.index,  # Set the tick labels to the unique values in your DataFrame
     )
 )
-    st.plotly_chart(fig)
-with tab2 :
-    fig = px.scatter(pca_data_var, x='PC1', y='PC2', color='project',title="Project dependency - PCA representation")
+    st.plotly_chart(fig)   
+with col2:
+    value_counts = lsvf_knn['mgCST'].value_counts()
+    fig = px.bar(x=value_counts.index, y=value_counts.values, title='MgCSTs distribution in LSVF')
     fig.update_layout(
+    xaxis_title='MgCSTs',
+    yaxis_title='Number of samples',
     xaxis=dict(
-        showgrid=True,  # Show grid lines
-        gridcolor='rgba(0,0,0,0.1)',  # Grid line color
-        gridwidth=1,  # Grid line width
+        tickmode='array',
+        tickvals=value_counts.index,  # Set the tick values to the unique values in your DataFrame
+        ticktext=value_counts.index,  # Set the tick labels to the unique values in your DataFrame
     )
 )
     st.plotly_chart(fig)

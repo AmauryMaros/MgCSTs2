@@ -16,6 +16,8 @@ conda env create -f environment.yml
     - https://www.dropbox.com/scl/fi/9cg29rpz6aww4ss4sqbjt/hover_dict.pkl?rlkey=l3r23hflpa7hb7yshh5pacouy&dl=0
 
     - https://www.dropbox.com/scl/fi/zch1zjztcgbopild41e1j/VOG_gene_product.csv?rlkey=q197iyft1hpny4yoss3tcidmu&dl=0
+    
+    - https://www.dropbox.com/scl/fi/4deuajpnxmm4b7ag87xme/gene_pa_count.pkl?rlkey=j3behkg6q2842r2bn988u7ctw&st=rg2meztx&dl=0
 
 2. Put the files in the Data/ directory
 
