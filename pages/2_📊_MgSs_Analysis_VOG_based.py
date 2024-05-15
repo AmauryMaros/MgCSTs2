@@ -11,8 +11,8 @@ st.set_page_config(layout="centered")
 
 vog_clust = pd.read_csv("Data/mgss.clustering.parameters.vog.csv").rename(columns={"Unnamed: 0" : "species"}) # mgss clustering parameter
 vog_mgss_coverage = pd.read_csv("Data/vog.mgSs.coverage.stats.csv").rename(columns={"Unnamed: 0" : "sub_species", "as.factor(sample_cluster)" : "sample_cluster"}) # mgss coverage stats
-# VOG_GeneProduct = pd.read_csv("Data/VOG_gene_product.csv")
-VOG_GeneProduct = pd.read_csv("/Users/amaros/Documents/VOG_gene_product.csv") #VIRGO2 GeneProduct with VOG annotation
+VOG_GeneProduct = pd.read_csv("Data/VOG_gene_product.csv")
+#VOG_GeneProduct = pd.read_csv("/Users/amaros/Documents/VOG_gene_product.csv") #VIRGO2 GeneProduct with VOG annotation
 
 # with open('/Users/amaros/Documents/reorder_dataframe.pkl', 'rb') as f:
 with open('Data/reorder_dataframe.pkl', 'rb') as f:

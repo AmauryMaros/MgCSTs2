@@ -12,4 +12,6 @@ dependencies:
   - numpy
   - seaborn
   - plotly
+  - statsmodels
+  - openpyxl
   - r-base
