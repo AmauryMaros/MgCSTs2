@@ -1,12 +1,12 @@
+0. Ensure that the R language is installed and operational.
+
 1. Git clone this repo
 
 2. Create a conda env with dependencies :
 
 conda env create -f environment.yaml
 
-conda activate mgcsts_env
-
-<!-- # For Mgss Analysis : -->
+conda activate mgcst_env
 
 
 3. Download this files
@@ -26,11 +26,3 @@ conda activate mgcsts_env
 5. To run the app : 
 
 streamlit run 0_🏠_Home.py
-
-<!-- # For metabolomic analysis : download this file
-
-1. Download this file
-    - https://www.dropbox.com/scl/fi/hoxcb67zuur6b75z7banw/log_norm.pkl?rlkey=p68nhasjr1ccx7rt543vae6st&dl=0
-
-2. Put the file in Data/ directory -->
-

@@ -196,3 +196,5 @@ if heatmap :
         st.markdown(pdf_display, unsafe_allow_html=True)
 
     displayPDF("Medias/mgCST_VOG_heatmap.pdf")
+
+st.write("The heatmap will be stored in the Medias directory as mgCST_VOG_heatmap.pdf")
