@@ -4,6 +4,8 @@
 
 conda env create -f environment.yaml
 
+conda activate mgcsts_env
+
 <!-- # For Mgss Analysis : -->
 
 
