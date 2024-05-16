@@ -1,4 +1,4 @@
-0. Ensure that the R language is installed and operational.
+0. Ensure that the R is installed and operational.
 
 1. Git clone this repo
 
