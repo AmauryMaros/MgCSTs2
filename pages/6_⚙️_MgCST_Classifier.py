@@ -37,7 +37,7 @@ with col1 :
     displayPDF("Medias/vog_mgCST_heatmap_13Mar2024.pdf")
 
 with col2 :
-    st.subheader("Relative abundances of metagenomic subspecies (columns) by samples (rows)")
+    st.subheader("relabund_w_mgCSTs")
     st.dataframe(relabund)
 
 st.container()
@@ -46,5 +46,5 @@ with col3 :
     st.subheader("SampleID - MgCST assignment")
     st.dataframe(mgcsts)
 with col4 :
-    st.subheader("VOG abundance")
+    st.subheader("norm_counts_mgSs_mgCST")
     st.dataframe(vog_abundance)
