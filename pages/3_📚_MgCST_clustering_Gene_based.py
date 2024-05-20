@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import subprocess
-import base64  
+from streamlit_pdf_viewer import pdf_viewer
 import plotly.express as px
 import numpy as np
 
@@ -185,17 +185,19 @@ if heatmap :
     process = subprocess.Popen(["Rscript", "mgCSTs_heatmap.R"])
     result = process.communicate()
 
-    def displayPDF(file):
-        # Opening file from file path
-        with open(file, "rb") as f:
-            base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+    # def displayPDF(file):
+    #     # Opening file from file path
+    #     with open(file, "rb") as f:
+    #         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
 
-        # Embedding PDF in HTML
-        pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
+    #     # Embedding PDF in HTML
+    #     pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
 
-        # Displaying File
-        st.markdown(pdf_display, unsafe_allow_html=True)
+    #     # Displaying File
+    #     st.markdown(pdf_display, unsafe_allow_html=True)
 
-    displayPDF("Medias/mgCST_heatmap.pdf")
+    # displayPDF("Medias/mgCST_heatmap.pdf")
+
+    pdf_viewer("Medias/mgCST_heatmap.pdf")
 
 st.write("The heatmap will be stored in the Medias directory as mgCST_heatmap.pdf")

@@ -14,3 +14,4 @@ dependencies:
   - plotly
   - statsmodels
   - openpyxl
+  - streamlit_pdf_viewer
